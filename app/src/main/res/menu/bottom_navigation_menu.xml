@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/one"
+        android:id="@+id/navigation_events"
         android:title="@string/events"
         android:icon="@android:drawable/ic_menu_today">
     </item>
 
     <item
-        android:id="@+id/two"
+        android:id="@+id/navigation_invitations"
         android:title="@string/invitations"
         android:icon="@android:drawable/ic_dialog_email">
     </item>
 
     <item
-        android:id="@+id/three"
+        android:id="@+id/navigation_my_events"
         android:title="@string/my_events"
         android:icon="@android:drawable/ic_input_get">
     </item>
