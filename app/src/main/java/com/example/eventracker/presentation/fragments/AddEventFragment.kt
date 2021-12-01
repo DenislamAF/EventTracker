@@ -10,6 +10,7 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.eventracker.R
 import com.example.eventracker.databinding.AddEventFragmentBinding
 import com.example.eventracker.presentation.viewmodels.AddEventFragmentViewModel
 import java.text.SimpleDateFormat
@@ -41,7 +42,12 @@ class AddEventFragment: Fragment(), DatePickerDialog.OnDateSetListener {
                 addEventFragmentViewModel.createNewEvent(
                     eventName, eventDescription, date)
                 Toast.makeText(this.context, "Success", Toast.LENGTH_SHORT).show()
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.addToBackStack("login")
+                    ?.replace(R.id.main_container, MainEventFragment())
+                    ?.commit()
             }else Toast.makeText(this.context, "Something is wrong", Toast.LENGTH_SHORT).show()
+
         }
 
         addEventFragmentBinding?.eventDateEt?.setOnClickListener {

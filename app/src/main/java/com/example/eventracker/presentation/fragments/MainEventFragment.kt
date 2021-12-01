@@ -38,7 +38,7 @@ class MainEventFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainFragmentViewModel = ViewModelProvider(this)[MainFragmentViewModel::class.java]
-        Toast.makeText(this.context, mainFragmentViewModel.getUserLiveData()?.value?.email.toString(), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this.context, mainFragmentViewModel.getUserLiveData()?.value?.email.toString(), Toast.LENGTH_SHORT).show()
         setRecyclerView()
 
         mainFragmentViewModel.getUserLiveDatabase()?.observe(viewLifecycleOwner){
@@ -49,7 +49,7 @@ class MainEventFragment: Fragment() {
             activity?.supportFragmentManager?.beginTransaction()
                 ?.addToBackStack(null)
                 ?.replace(R.id.main_container, AddEventFragment())
-                ?.commit()
+                ?.commitAllowingStateLoss()
         }
     }
     //TODO CHANGE
