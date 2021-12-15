@@ -25,5 +25,5 @@ interface GeneralRepository {
     fun getUser(): LiveData<User>
     fun getFirebaseInfo(): LiveData<String>
     fun getEventByKey(mode: String, key: String): Event
-    fun getUsersBySearchText(searchText: String): ArrayList<User>
+    fun getUsersBySearchText(searchText: String): List<User>
 }

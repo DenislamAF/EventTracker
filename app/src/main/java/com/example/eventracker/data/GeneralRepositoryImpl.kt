@@ -31,6 +31,9 @@ class GeneralRepositoryImpl: GeneralRepository {
     //вся инфа о юзере из бд
     private var userLiveDatabase: MutableLiveData<User>? = null
 
+    //юзеры по поиску
+    private var usersSearchLiveDatabase = ArrayList<User>()
+
     //нужно ли делать popback
     private var shouldPopBackStack: MutableLiveData<Unit>? = null
 
@@ -171,12 +174,26 @@ class GeneralRepositoryImpl: GeneralRepository {
             ?.setValue(event)
     }
 
-    override fun getUsersBySearchText(searchText: String): ArrayList<User>{
-//        val users = arrayListOf<User>()
-//        for (user in  database?.child("users")?.startAt(searchText, "login")){
-//            users.add(User(user.login, user.email, user.userID))
-//        }
-//        return users
+    override fun getUsersBySearchText(searchText: String): List<User> {
+        database?.child("users")?.orderByChild("login")?.startAt(searchText)?.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                usersSearchLiveDatabase.clear()
+                for (snapshotOne in snapshot.children){
+                    usersSearchLiveDatabase.add(
+                        User(login = snapshotOne.child("login").value.toString(),
+                            userID = snapshotOne.child("userID").value.toString(),
+                            email = snapshotOne.child("email").value.toString()
+                        )
+                    )
+                    Log.d("DB/User:", snapshotOne.child("login").value.toString())
+                }
+                Log.d("DB/Users:", usersSearchLiveDatabase.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+
+        /*
         val availableUsers = arrayListOf(
             User("Вася Анатольев", "Mail@mail.ru", arrayListOf(), arrayListOf(), "312412"),
             User("Петя Иванов", "Mail@mail.ru", arrayListOf(), arrayListOf(), "31242"),
@@ -184,9 +201,10 @@ class GeneralRepositoryImpl: GeneralRepository {
         )
         val users = arrayListOf<User>()
         for (i in (1..searchText.length)) {
-            users.add(availableUsers[(0..2).random()])
+            users.add(availableUsers.random())
         }
-        return users
+        */
+        return usersSearchLiveDatabase.toList()
     }
 
 

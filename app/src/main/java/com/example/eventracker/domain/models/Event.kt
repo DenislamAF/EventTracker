@@ -10,7 +10,7 @@ data class Event(
     val date: String = "",
     val name: String = "",
     val description: String = "",
-    val members: ArrayList<User> = arrayListOf(),
+    val members: List<User> = arrayListOf(),
     val eventPosition: LatLng = LatLng(-33.852, 151.211),
     val time: String = ""
 ){

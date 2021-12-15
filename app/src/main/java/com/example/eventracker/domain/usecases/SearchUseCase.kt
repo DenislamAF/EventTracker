@@ -4,7 +4,7 @@ import com.example.eventracker.domain.GeneralRepository
 import com.example.eventracker.domain.models.User
 
 class SearchUseCase(private val generalRepository: GeneralRepository) {
-    fun getUsersBySearchText(text: String): ArrayList<User> {
+    fun getUsersBySearchText(text: String): List<User> {
         return generalRepository.getUsersBySearchText(text)
     }
 }

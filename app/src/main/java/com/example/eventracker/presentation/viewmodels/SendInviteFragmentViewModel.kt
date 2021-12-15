@@ -32,7 +32,7 @@ class SendInviteFragmentViewModel(private val sendInviteUseCase: SendInviteUseCa
         }
     }
 
-    fun getUsersBySearchText(text: String): ArrayList<User>{
+    fun getUsersBySearchText(text: String): List<User>{
         return searchUseCase.getUsersBySearchText(text)
     }
 
