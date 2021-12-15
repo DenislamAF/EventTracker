@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="30sp"
         android:textStyle="bold"
-        tools:text="Событие"/>
+        android:text="@string/invite_title"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:theme="@style/Theme.EvenTracker.EventCard"
         app:layout_constraintTop_toBottomOf="@+id/detailed_name_eventTV"
@@ -62,53 +62,40 @@
             app:layout_constraintBottom_toBottomOf="parent">
         </TextView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-    <ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/location_address"
-        app:layout_constraintTop_toBottomOf="@+id/DateTimeLayout">
-        <TextView
-            android:id="@+id/detailed_description_eventTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            tools:text="Событие">
-        </TextView>
-    </ScrollView>
-    <TextView
-        android:padding="16dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:id="@+id/location_address"
+
+    <EditText
+        style="@style/Theme.EvenTracker.DetailedEventHeader"
+        android:id="@+id/input_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/detailed_map"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scroll_view"/>
-    <fragment
-        android:layout_margin="16dp"
-        android:id="@+id/detailed_map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/location_address"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-    <TextView
-        android:theme="@style/Theme.EvenTracker.FloatingButtonInvite"
+        app:layout_constraintTop_toBottomOf="@+id/DateTimeLayout"
+        android:paddingLeft="50dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:hint="Name"
+        tools:text="Имя человека"
+        android:inputType="text"
+        android:paddingBottom="10dp"/>
+
+    <ImageView
+        android:id="@+id/icon_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button_invite"
-        android:layout_marginEnd ="16dp"
-        android:layout_marginBottom="16dp"
-        android:textSize="20sp"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_baseline_search_24"
+        app:layout_constraintBottom_toBottomOf="@+id/input_name"
+        app:layout_constraintStart_toStartOf="@+id/input_name"
+        app:layout_constraintTop_toBottomOf="@+id/DateTimeLayout" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/names_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-    </TextView>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_name"
+        android:layout_marginTop="10dp"
+        tools:listitem="@layout/name">
+    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

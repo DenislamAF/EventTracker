@@ -74,16 +74,16 @@ class GeneralRepositoryImpl: GeneralRepository {
 
     override suspend fun register(name: String, email: String, password: String): Unit = withContext(Dispatchers.IO){
         firebaseAuth?.createUserWithEmailAndPassword(email, password)?.addOnCompleteListener {
-                if (it.isSuccessful){
-                    addToDatabase(name, email)
-                    shouldPopBackStack?.value = Unit
-                    firebaseInfoLiveData?.value = "Success"
-                }
-                else {
-                    firebaseInfoLiveData?.value = "Login failure: ${it.exception?.localizedMessage}"
-                }
+            if (it.isSuccessful){
+                addToDatabase(name, email)
+                shouldPopBackStack?.value = Unit
+                firebaseInfoLiveData?.value = "Success"
+            }
+            else {
+                firebaseInfoLiveData?.value = "Login failure: ${it.exception?.localizedMessage}"
             }
         }
+    }
 
     private fun addToDatabase(name: String, email: String){
         database?.child("users")?.child(firebaseAuth?.currentUser!!.uid)?.setValue(
@@ -94,12 +94,12 @@ class GeneralRepositoryImpl: GeneralRepository {
     override suspend fun createEvent(event: Event): Unit = withContext(Dispatchers.IO){
         Log.d("CREATE", userLiveDatabase?.value.toString())
         val key = database?.push()?.key.toString()
+        val newEvent = Event(key,userLiveDatabase?.value!!.login, event.date, event.name, event.description,
+            eventPosition = event.eventPosition, time = event.time)
         database?.child("users")?.child(firebaseAuth?.currentUser!!.uid)?.child("events")
             ?.child(key)
-            ?.setValue(Event(key,userLiveDatabase?.value!!.login, event.date, event.name, event.description,
-                eventPosition = event.eventPosition, time = event.time))
-        sendInvites(key, Event(key,userLiveDatabase?.value!!.login, event.date, event.name, event.description,
-                eventPosition = event.eventPosition, time = event.time))
+            ?.setValue(newEvent)
+        sendInvites(key, newEvent)
         GlobalScope.launch(Dispatchers.Main) {
             firebaseInfoLiveData?.value = "Success"
         }
@@ -165,6 +165,31 @@ class GeneralRepositoryImpl: GeneralRepository {
             ?.child("events")?.child(event.key)?.setValue(event)
     }
 
+    override suspend fun sendInviteToUser(uid: String, event: Event) {
+        database?.child("users")?.child(uid)?.child("invitations")
+            ?.child(event.key)
+            ?.setValue(event)
+    }
+
+    override fun getUsersBySearchText(searchText: String): ArrayList<User>{
+//        val users = arrayListOf<User>()
+//        for (user in  database?.child("users")?.startAt(searchText, "login")){
+//            users.add(User(user.login, user.email, user.userID))
+//        }
+//        return users
+        val availableUsers = arrayListOf(
+            User("Вася Анатольев", "Mail@mail.ru", arrayListOf(), arrayListOf(), "312412"),
+            User("Петя Иванов", "Mail@mail.ru", arrayListOf(), arrayListOf(), "31242"),
+            User("Надя Калинина", "Mail@mail.ru", arrayListOf(), arrayListOf(), "32412")
+        )
+        val users = arrayListOf<User>()
+        for (i in (1..searchText.length)) {
+            users.add(availableUsers[(0..2).random()])
+        }
+        return users
+    }
+
+
     //TODO сделать что-то с безопасностью...
     //TODO вообще это на бэкенде делать надо, но ладно...
     private fun getAllUsersID(){
@@ -190,6 +215,12 @@ class GeneralRepositoryImpl: GeneralRepository {
                 ?.child(key)
                 ?.setValue(event)
         }
+    }
+
+    private fun sendInvite(key: String, event: Event, id: String){
+        database?.child("users")?.child(id)?.child("invitations")
+            ?.child(key)
+            ?.setValue(event)
     }
 
     fun updateUser(){

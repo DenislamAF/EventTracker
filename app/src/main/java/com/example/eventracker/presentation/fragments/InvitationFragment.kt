@@ -41,7 +41,7 @@ class InvitationFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        invitationFragmentBinding =  InvitationFragmentBinding.inflate(inflater, container, false)
+        invitationFragmentBinding = InvitationFragmentBinding.inflate(inflater, container, false)
         return invitationFragmentBinding?.root
     }
 

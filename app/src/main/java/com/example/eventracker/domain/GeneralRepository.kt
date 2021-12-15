@@ -18,10 +18,12 @@ interface GeneralRepository {
 
     suspend fun deleteInvite(event: Event)
     suspend fun addInviteToEvents(event: Event)
+    suspend fun sendInviteToUser(uid: String, event: Event)
 
     fun logOut()
     fun getFirebaseUser(): LiveData<FirebaseUser>
     fun getUser(): LiveData<User>
     fun getFirebaseInfo(): LiveData<String>
     fun getEventByKey(mode: String, key: String): Event
+    fun getUsersBySearchText(searchText: String): ArrayList<User>
 }

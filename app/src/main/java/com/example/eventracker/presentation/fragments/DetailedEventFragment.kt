@@ -1,5 +1,6 @@
 package com.example.eventracker.presentation.fragments
 
+import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -12,10 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.eventracker.R
+import com.example.eventracker.data.GeneralRepositoryImpl
 import com.example.eventracker.databinding.ActivityMainBinding.inflate
 import com.example.eventracker.databinding.DetailedEventFragmentBinding
 import com.example.eventracker.databinding.MainEventFragmentBinding
 import com.example.eventracker.domain.models.Event
+import com.example.eventracker.presentation.fragments.SendInviteFragment.Companion.newInstanceSendInviteFragment
 import com.example.eventracker.presentation.viewmodels.DetailedEventFragmentViewModel
 import com.example.eventracker.presentation.viewmodels.MainFragmentViewModel
 import com.example.eventracker.presentation.viewmodels.ViewModelFactory
@@ -25,18 +28,28 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.lang.RuntimeException
 import java.util.*
 
 class DetailedEventFragment: Fragment(), OnMapReadyCallback {
-
     private lateinit var mMap: GoogleMap
     private lateinit var detailedEventFragmentViewModel: DetailedEventFragmentViewModel
+    private lateinit var onFragmentsInteractionsListener: OnFragmentsInteractionsListener
     private var detailedEventFragmentBinding: DetailedEventFragmentBinding? = null
     private var eventKey: String = Event.UNDEFINED_KEY
 
     //TODO исправить это недоразумение
     private var eL = MutableLiveData<LatLng>()
     private var mode = ""
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentsInteractionsListener){
+            onFragmentsInteractionsListener = context
+        }else{
+            throw RuntimeException("Activity must implement OnFragmentsInteractionsListener")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,6 +70,11 @@ class DetailedEventFragment: Fragment(), OnMapReadyCallback {
             setInfo()
         }
 
+        detailedEventFragmentBinding?.buttonInvite?.setOnClickListener {
+            onFragmentsInteractionsListener.onAddBackStack(
+                "sendInvite",
+                newInstanceSendInviteFragment(mode, eventKey))
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -78,7 +96,6 @@ class DetailedEventFragment: Fragment(), OnMapReadyCallback {
             detailedDescriptionEventTV.text = event?.description
                 eL.value = event!!.eventPosition
         }
-
     }
 
     private fun initMap(){

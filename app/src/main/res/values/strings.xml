@@ -31,4 +31,6 @@
     <string name="click_here_to_choose_date">Click here to choose date</string>
     <string name="name">Name</string>
     <string name="click_here_to_choose_time">Click here to choose time</string>
+    <string name="invite">Invite</string>
+    <string name="invite_title">Invite people</string>
 </resources>
