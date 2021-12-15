@@ -1,5 +1,6 @@
 package com.example.eventracker.presentation.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +14,10 @@ class SearchedUsersListAdapter: RecyclerView.Adapter<SearchedUsersListAdapter.Na
     //TODO CHANGE UPDATE
     var list = listOf<User>()
     set(value) {
+        Log.d("ADAPTER/to set", value.toString())
         field = value
         notifyDataSetChanged()
+        Log.d("ADAPTER/Setted", field.toString())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NameItemHolder {

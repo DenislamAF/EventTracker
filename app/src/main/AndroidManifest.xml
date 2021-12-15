@@ -16,7 +16,8 @@
 
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyC1ATSNmm71OQipPhvNoSGnQXq_96e1vxw"/>
         <activity android:name=".presentation.activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

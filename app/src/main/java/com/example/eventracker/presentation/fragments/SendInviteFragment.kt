@@ -57,7 +57,9 @@ class SendInviteFragment: Fragment() {
                 before: Int, count: Int
             ) {
                 Log.d("TEXT in EDIT", s.toString())
-                searchedUsersListAdapter.list = sendInviteFragmentViewModel.getUsersBySearchText(s.toString())
+                val users = sendInviteFragmentViewModel.getUsersBySearchText(s.toString())
+                Log.d("Users:", users.toString())
+                searchedUsersListAdapter.list = users
             }
         })
 
