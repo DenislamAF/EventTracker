@@ -75,6 +75,8 @@
         android:hint="Name"
         tools:text="Имя человека"
         android:inputType="text"
+        android:maxLines="1"
+        android:lines="1"
         android:paddingBottom="10dp"/>
 
     <ImageView

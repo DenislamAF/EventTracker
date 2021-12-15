@@ -43,6 +43,12 @@
         <item name="colorOnSecondary">@color/mainLight</item>
         <item name="android:src">@drawable/ic_baseline_add_24</item>
     </style>
+    <!-- Floating button to invite style. -->
+    <style name="Theme.EvenTracker.FloatingButtonInvite" parent="Widget.Design.FloatingActionButton">
+        <item name="colorSecondary">@color/mainContrast</item>
+        <item name="colorOnSecondary">@color/mainLight</item>
+        <item name="android:src">@drawable/ic_baseline_person_add_24</item>
+    </style>
     <!-- Button style. -->
     <style name="Theme.EvenTracker.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/mainDark</item>
@@ -65,6 +71,7 @@
     <style name="Theme.EvenTracker.DetailedEventHeader" parent="">
         <item name="android:background">@color/mainLight</item>
         <item name="android:textColor">@color/mainDark</item>
+        <item name="android:textColorHint">@color/mainDark</item>
     </style>
     <!-- Some colors. -->
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/mainLight</color>
